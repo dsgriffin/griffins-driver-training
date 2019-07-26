@@ -151,7 +151,7 @@ footer {
     width: 50px;
 }
 
-#useful-links img {
+.links img {
     display: block;
     padding-top: 4%;
     padding-bottom: 4%;
@@ -177,6 +177,10 @@ footer {
 
 #banner {
     width: 62%;
+}
+
+#social-media img {
+    width: 75%;
 }
 
 #collingwood-ad {
