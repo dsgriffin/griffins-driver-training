@@ -1,11 +1,44 @@
-	// Hide all images in the slideshow initially, except the first.
-	$('.testimonial-slide:gt(0)').hide();
-	// Cache original height + set so content below isn't disrupted (responsive design so don't wanna mess around with absolute)
-	var containerHeight = $(".testimonial-slide").eq(0).height();
-	$('#testimonial-slideshow').height(containerHeight);
-	// Every 9 seconds, fade out the currently displayed image, fade in the next one and add the previous one back into the loop.
-	setInterval(function(){
-		$(".testimonial-slide:first-child").fadeOut("slow", function() {
-			$(this).next('.testimonial-slide').fadeIn("slow").end().appendTo('#testimonial-slideshow');
-		});
-	}, 10000);
+document.addEventListener("DOMContentLoaded", function() {
+    var slideshow = document.getElementById("testimonial-slideshow");
+    if (!slideshow) {
+        return;
+    }
+
+    var slides = Array.prototype.slice.call(
+        slideshow.querySelectorAll(".testimonial-slide")
+    );
+
+    if (!slides.length) {
+        return;
+    }
+
+    var activeIndex = 0;
+
+    function syncSlideshowHeight() {
+        var activeSlide = slides[activeIndex];
+        if (activeSlide) {
+            slideshow.style.height = activeSlide.offsetHeight + "px";
+        }
+    }
+
+    function showSlide(nextIndex) {
+        slides[activeIndex].style.display = "none";
+        activeIndex = nextIndex;
+        slides[activeIndex].style.display = "flex";
+        syncSlideshowHeight();
+    }
+
+    slides.forEach(function(slide, index) {
+        slide.style.display = index === 0 ? "flex" : "none";
+    });
+
+    syncSlideshowHeight();
+    window.addEventListener("resize", syncSlideshowHeight);
+
+    if (slides.length > 1) {
+        window.setInterval(function() {
+            var nextIndex = (activeIndex + 1) % slides.length;
+            showSlide(nextIndex);
+        }, 10000);
+    }
+});
