@@ -366,7 +366,18 @@ aside h2 {
     border: none;
 }
 
+.vehicle-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+}
+
+.vehicle-gallery .vehicle-img:last-child {
+    align-self: center;
+}
+
 .vehicle-img {
+    width: 100%;
     border: 1px solid var(--border);
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(19, 41, 61, 0.12);
@@ -426,6 +437,10 @@ aside h2 {
         min-height: 0;
         padding: 0.45rem 0.75rem;
         font-size: 0.95rem;
+    }
+
+    .vehicle-gallery {
+        grid-template-columns: 1fr;
     }
 
     #main-article,
